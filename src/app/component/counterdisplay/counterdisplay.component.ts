@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { CounterModel } from 'src/app/shared/store/counter.model';
+import { getcounter } from 'src/app/shared/store/counter.selector';
 
 @Component({
   selector: 'app-counterdisplay',
@@ -16,17 +17,15 @@ export class CounterdisplayComponent implements OnInit, OnDestroy {
   countersubcribe!: Subscription;
   counter$!: Observable<CounterModel>;
   ngOnInit(): void {
-    // this.store.select('counter').subscribe((data) => {
-    //   this.counterdisplay = data.counter;
-    //   this.channelname = data.channelname;
-    // });
-
-    this.counter$ = this.store.select('counter');
+    this.countersubcribe = this.store.select(getcounter).subscribe((data) => {
+      this.counterdisplay = data;
+      console.log('counter display');
+    });
   }
 
   ngOnDestroy(): void {
-    // if (this.countersubcribe) {
-    //   this.countersubcribe.unsubscribe();
-    // }
+    if (this.countersubcribe) {
+      this.countersubcribe.unsubscribe();
+    }
   }
 }
