@@ -11,6 +11,11 @@ import { MaterialModule } from './Material.Module';
 import { CustomcounterComponent } from './component/customcounter/customcounter.component';
 import { FormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { blogReducer } from './shared/store/Blog/Blog.reducers';
+import { BlogComponent } from './component/blog/blog.component';
+import { CounterComponent } from './component/counter/counter.component';
+import { Appstate } from './shared/store/Global/App.state';
+import { MenuheaderComponent } from './component/menuheader/menuheader.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +23,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     CounterdisplayComponent,
     CounterbuttonComponent,
     CustomcounterComponent,
+    BlogComponent,
+    CounterComponent,
+    MenuheaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    StoreModule.forRoot({ counter: counterReducer }),
+    StoreModule.forRoot(Appstate),
     BrowserAnimationsModule,
     FormsModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
