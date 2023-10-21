@@ -19,17 +19,25 @@ export class BlogComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(getblog).subscribe((item) => {
       this.bloglist = item;
-      console.log(this.bloglist);
     });
   }
 
   AddBlog() {
-    this.OpenPopup();
+    this.OpenPopup(0, 'Add Blog');
   }
 
-  OpenPopup() {
+  OpenPopup(id: any, title: any, isedit = false) {
     this.dialog.open(AddblogComponent, {
       width: '40%',
+      data: {
+        id: id,
+        title: title,
+        isedit: isedit,
+      },
     });
+  }
+
+  EditBlog(id: any) {
+    this.OpenPopup(id, 'Edit Blog', true);
   }
 }

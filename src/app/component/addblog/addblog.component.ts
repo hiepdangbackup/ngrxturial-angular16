@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { addblog } from 'src/app/shared/store/Blog/Blog.actions';
+import { addblog, updateblog } from 'src/app/shared/store/Blog/Blog.actions';
 import { BlogModel } from 'src/app/shared/store/Blog/Blog.model';
+import { getblogbyid } from 'src/app/shared/store/Blog/Blog.selectors';
 import { AppStateModel } from 'src/app/shared/store/Global/AppState.Model';
 
 @Component({
@@ -11,15 +12,37 @@ import { AppStateModel } from 'src/app/shared/store/Global/AppState.Model';
   templateUrl: './addblog.component.html',
   styleUrls: ['./addblog.component.css'],
 })
-export class AddblogComponent {
+export class AddblogComponent implements OnInit {
+  pagetitle = '';
+  editblogid = 0;
+  editdata!: BlogModel;
+
   constructor(
     private dialogref: MatDialogRef<AddblogComponent>,
     private builder: FormBuilder,
-    private store: Store<AppStateModel>
+    private store: Store<AppStateModel>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+  ngOnInit(): void {
+    this.pagetitle = this.data.title;
+    if (this.data.isedit) {
+      this.editblogid = this.data.id;
+      this.store.select(getblogbyid(this.editblogid)).subscribe((_data) => {
+        this.editdata = _data;
+        this.blogform.setValue({
+          id: this.editdata.id,
+          title: this.editdata.title,
+          description: this.editdata.description,
+        });
+      });
+    }
+  }
 
   closepopup() {
     this.dialogref.close();
+    if (this.data.isedit) {
+      this.editblogid = this.data;
+    }
   }
 
   blogform = this.builder.group({
@@ -35,7 +58,12 @@ export class AddblogComponent {
         title: this.blogform.value.title as string,
         description: this.blogform.value.description as string,
       };
-      this.store.dispatch(addblog({ bloginput: _bloginput }));
+      if (this.data.isedit) {
+        _bloginput.id = this.blogform.value.id as number;
+        this.store.dispatch(updateblog({ bloginput: _bloginput }));
+      } else {
+        this.store.dispatch(addblog({ bloginput: _bloginput }));
+      }
       this.closepopup();
     }
   }
