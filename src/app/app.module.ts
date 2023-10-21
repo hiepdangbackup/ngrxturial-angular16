@@ -9,13 +9,13 @@ import { CounterbuttonComponent } from './component/counterbutton/counterbutton.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './Material.Module';
 import { CustomcounterComponent } from './component/customcounter/customcounter.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { blogReducer } from './shared/store/Blog/Blog.reducers';
 import { BlogComponent } from './component/blog/blog.component';
 import { CounterComponent } from './component/counter/counter.component';
 import { Appstate } from './shared/store/Global/App.state';
 import { MenuheaderComponent } from './component/menuheader/menuheader.component';
+import { AddblogComponent } from './component/addblog/addblog.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +26,7 @@ import { MenuheaderComponent } from './component/menuheader/menuheader.component
     BlogComponent,
     CounterComponent,
     MenuheaderComponent,
+    AddblogComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +35,11 @@ import { MenuheaderComponent } from './component/menuheader/menuheader.component
     StoreModule.forRoot(Appstate),
     BrowserAnimationsModule,
     FormsModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    ReactiveFormsModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: false,
+      logOnly: !isDevMode(),
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
