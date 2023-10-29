@@ -1,4 +1,4 @@
-import { BlogModel, Blogs } from './Blog.model';
+import { Blogs } from './Blog.model';
 
 export const BlogState: Blogs = {
   bloglist: [
@@ -7,16 +7,15 @@ export const BlogState: Blogs = {
       title: 'Angular',
       description: 'Angular is an opensource powered by goole',
     },
-    //,
-    // {
-    //   id: 2,
-    //   title: 'React',
-    //   description: 'React is an opensource powered by META',
-    // },
-    // {
-    //   id: 3,
-    //   title: '.NET',
-    //   description: '.NET is an opensource powered by Microsoft',
-    // },
+    {
+      id: 2,
+      title: 'React',
+      description: 'React is an opensource powered by META',
+    },
+    {
+      id: 3,
+      title: '.NET',
+      description: '.NET is an opensource powered by Microsoft',
+    },
   ],
 };
