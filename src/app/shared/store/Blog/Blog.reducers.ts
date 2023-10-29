@@ -3,6 +3,7 @@ import {
   addblog,
   deleteblog,
   loadblog,
+  loadblogfail,
   loadblogsuccess,
   updateblog,
 } from './Blog.actions';
@@ -20,6 +21,15 @@ const _blogReducer = createReducer(
     return {
       ...state,
       bloglist: [...action.bloglist],
+      Errormessage: '',
+    };
+  }),
+  on(loadblogfail, (state, action) => {
+    console.log(action.Errortext);
+    return {
+      ...state,
+      bloglist: [],
+      Errormessage: action.Errortext.message,
     };
   }),
   on(addblog, (state, action) => {

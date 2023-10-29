@@ -14,6 +14,6 @@ export class MasterService {
   }
 
   GetAllBlogs(): Observable<BlogModel[]> {
-    return this.http.get<BlogModel[]>('http://localhost:3000/Blogs');
+    return this.http.get<BlogModel[]>('http://localhost:3000/Blogs1');
   }
 }
