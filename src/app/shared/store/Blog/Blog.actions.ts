@@ -7,6 +7,10 @@ export const LOAD_BLOG_FAIL = `[blog page] load blog fail`;
 
 export const LOAD_BLOG = '[blog page] load blog';
 
+export const ADD_BLOG_SUCCESS = '[blog page] add blog success';
+
+export const ADD_BLOG = '[blog page] add blog';
+
 export const loadblog = createAction(LOAD_BLOG);
 
 export const loadblogsuccess = createAction(
@@ -20,7 +24,12 @@ export const loadblogfail = createAction(
 );
 
 export const addblog = createAction(
-  'addblog',
+  ADD_BLOG,
+  props<{ bloginput: BlogModel }>()
+);
+
+export const addblogsuccess = createAction(
+  ADD_BLOG_SUCCESS,
   props<{ bloginput: BlogModel }>()
 );
 
